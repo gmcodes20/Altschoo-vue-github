@@ -1,26 +1,46 @@
+<script setup>
+import { RouterView, RouterLink } from "vue-router";
+
+import "./assets/main.css";
+
+// import { ref } from "vue";
+
+// const counter = ref(0);
+</script>
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container flex">
+    <nav class="nav flex">
+      <RouterLink active-class="active" to="/">Home</RouterLink>
+      <RouterLink active-class="active" to="/about">About</RouterLink>
+    </nav>
+    <main class="main">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "AltschoolExams",
+  components: {},
+  data() {
+    return {
+      name: "Martins",
+      courses: ["Programming", "Social Science"],
+      repos: [],
+    };
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.active {
+  font-weight: 700;
+  color: brown;
+}
+
+.container {
+  flex-direction: column;
 }
 </style>

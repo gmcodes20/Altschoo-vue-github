@@ -161,29 +161,22 @@ export default {
     const username = this.username;
     let githubClientId;
     let githubClientSecret;
-    let githubPersonalAccessToken;
+    // let githubPersonalAccessToken;
     if (process.env.NODE_ENV !== "development") {
       // console.log(process.env.NODE_ENV);
       githubClientId = process.env.GITHUB_CLIENT_ID;
       githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-      githubPersonalAccessToken =
-        process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
+      // githubPersonalAccessToken =        process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
     } else {
       githubClientId = process.env.VUE_APP_GITHUB_CLIENT_ID;
       githubClientSecret = process.env.VUE_APP_GITHUB_CLIENT_SECRET;
-      githubPersonalAccessToken =
-        process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
+      // githubPersonalAccessToken = process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
     }
     this.loading = true;
     try {
       await axios
         .get(
-          ` https://api.github.com/users/${username}/repos?per_page=100&client_id=${githubClientId}&secret=${githubClientSecret}`,
-          {
-            headers: {
-              Authorization: `Bearer ${githubPersonalAccessToken}`,
-            },
-          }
+          ` https://api.github.com/users/${username}/repos?per_page=100&client_id=${githubClientId}&secret=${githubClientSecret}`
         )
         .then((response) => {
           this.repos = response.data;

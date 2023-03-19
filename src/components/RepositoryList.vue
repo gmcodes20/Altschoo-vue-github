@@ -3,10 +3,11 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 </script>
 <template>
-  <div class="container">
+  <div class="repositories">
     <h3 style="margin-bottom: 1rem; color: brown; font-size: 2rem">
       {{ `${username}'s Repository` }}
     </h3>
+
     <div v-if="loading">
       <LoadingPage :isLoading="loading" />
     </div>
@@ -15,7 +16,7 @@ const router = useRouter();
       <div class="cards grid">
         <div
           @click="router.push(`./RepoDetails/${repo.name}`)"
-          class="card"
+          class="card repo-list-card"
           v-for="repo in paginatedRepos"
           :key="repo.id"
         >
@@ -88,7 +89,7 @@ const router = useRouter();
     </div>
 
     <!-- <p>{{ repos }}</p> -->
-    <p v-if="repoErro">{{ repoErro }}</p>
+    <p class="request-error" v-if="repoErro">{{ repoErro }}</p>
   </div>
 </template>
 
@@ -160,21 +161,34 @@ export default {
     const username = this.username;
     let githubClientId;
     let githubClientSecret;
+    let githubPersonalAccessToken;
     if (process.env.NODE_ENV !== "development") {
       // console.log(process.env.NODE_ENV);
       githubClientId = process.env.GITHUB_CLIENT_ID;
       githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+      githubPersonalAccessToken =
+        process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
     } else {
       githubClientId = process.env.VUE_APP_GITHUB_CLIENT_ID;
       githubClientSecret = process.env.VUE_APP_GITHUB_CLIENT_SECRET;
+      githubPersonalAccessToken =
+        process.env.VUE_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
     }
     this.loading = true;
     try {
-      const create = await axios.get(
-        ` https://api.github.com/users/${username}/repos?client_id=${githubClientId}&secret=${githubClientSecret}`
-      );
-      this.repos = create.data;
-      // console.log(process.env.BASE_URL);
+      await axios
+        .get(
+          ` https://api.github.com/users/${username}/repos?per_page=100&client_id=${githubClientId}&secret=${githubClientSecret}`,
+          {
+            headers: {
+              Authorization: `Bearer ${githubPersonalAccessToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          this.repos = response.data;
+        });
+      console.log(this.repos);
     } catch (error) {
       this.repoErro = error;
       // console.log(error);
@@ -198,6 +212,9 @@ export default {
   text-overflow: ellipsis;
 }
 
+.repo-list-card {
+  cursor: pointer;
+}
 .card-details {
   flex-direction: row;
   align-items: center;

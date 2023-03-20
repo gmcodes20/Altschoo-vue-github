@@ -26,6 +26,29 @@ a {
   text-decoration: none;
   transition: 0.5s;
 }
+
+.btn {
+  text-align: center;
+  padding: 1rem 1.2rem;
+  border: 1px solid blue;
+  display: inline-block;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.btn-primary {
+  background-color: blue;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: rgb(49, 49, 206);
+}
+
+.pb-2 {
+  padding-bottom: 1.2rem;
+}
 /* a:hover {
   font-size: large;
 } */

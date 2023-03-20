@@ -8,7 +8,7 @@
     </div>
 
     <div v-else class="repo card">
-      <div class="details flex">
+      <div class="details pb-2 flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -26,23 +26,38 @@
       <div
         style="text-align: center; color: brown"
         v-if="repository.description"
-        class="description"
+        class="description pb-2"
       >
         {{ repository.description }}
       </div>
 
-      <div class="other-details">
-        <div class="visibility">Visibility: {{ repository.visibility }}</div>
+      <div class="other-details pb-2">
+        <div style="text-transform: capitalize" class="visibility pb-2">
+          Visibility: {{ repository.visibility }}
+        </div>
 
-        <div v-if="repository.license" class="license">
+        <div v-if="repository.license" class="license pb-2">
           License: {{ repository.license.name }}
         </div>
 
-        <div v-if="repository.language" class="language">
+        <div v-if="repository.language" class="language pb-2">
           Language: {{ repository.language }}
         </div>
 
-        <p>{{ repository.id }}</p>
+        <div style="text-transform: capitalize" class="default-branch pb-2">
+          Default Branch: {{ repository.default_branch }}
+        </div>
+        <div class="folks pb-2">
+          <i class="fa-solid fa-code-fork"></i> {{ repository.forks }}
+        </div>
+
+        <div class="owner pb-2">
+          Repository owner:
+          <a :href="repository.owner.html_url">{{ repository.owner.login }}</a>
+        </div>
+        <a :href="repository.html_url" class="btn pb-2 btn-primary"
+          >Visit Repository</a
+        >
       </div>
     </div>
   </div>
@@ -94,6 +109,10 @@ export default {
 </script>
 
 <style scoped>
+.repo {
+  font-size: 1.5em;
+}
+
 .repository-details {
   max-width: 80%;
   margin-inline: auto;
@@ -102,7 +121,7 @@ export default {
   --flex-gap: 0.8rem;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 .details p {
   font-size: 1.2rem;

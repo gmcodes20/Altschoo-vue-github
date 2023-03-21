@@ -47,17 +47,22 @@ const router = useRouter();
       </div>
 
       <div class="pagination-btns flex">
-        <button class="btn pagination-btn" @click="updatePage" :id="1">
+        <button
+          :disabled="activeIndex < 1"
+          class="btn pagination-btn"
+          @click="updatePage"
+          :id="1"
+        >
           First
         </button>
-        <!-- <button
+        <button
           :disabled="currentPage < 2"
           class="btn pagination-btn"
           :id="currentPage"
           @click="prev"
         >
           Prev
-        </button> -->
+        </button>
 
         <button
           class="btn pagination-btn"
@@ -69,22 +74,22 @@ const router = useRouter();
         >
           {{ item }}
         </button>
-        <!-- <button
+        <button
           class="btn pagination-btn"
           @click="next"
           :id="currentPage"
-          :disabled="currentPage == anotherTotalPage"
+          :disabled="currentPage == numbersOfButtons.length"
         >
           Next
-        </button> -->
-        <!-- <button
+        </button>
+        <button
           :id="currentPage"
-          @click="updatePage"
+          @click="last"
           class="btn pagination-btn"
-          :disabled="currentPage == anotherTotalPage"
+          :disabled="currentPage == numbersOfButtons.length"
         >
           Last
-        </button> -->
+        </button>
       </div>
     </div>
 
@@ -119,20 +124,20 @@ export default {
     updatePage(event) {
       this.currentPage = Number(event.target.id);
       this.activeIndex = this.currentPage - 1;
-      console.log(this.activeIndex);
-      //
     },
 
     prev() {
-      this.currentPage > 1 ? this.currentPage-- : this.currentPage;
-      this.anotherTotalPage = this.totalPageCount;
+      this.currentPage--;
+      this.activeIndex = this.currentPage - 1;
     },
-    next(e) {
-      console.log(e.target);
-      //   this.currentPage > this.repos.length
-      //     ? this.currentPage++
-      //     : this.currentPage;
-      this.currentPage + 1;
+    next() {
+      this.currentPage++;
+      this.activeIndex = this.currentPage - 1;
+      // console.log(this.currentPage);
+    },
+    last() {
+      this.currentPage = this.totalPageCount;
+      this.activeIndex = this.currentPage - 1;
     },
   },
 
@@ -235,9 +240,21 @@ export default {
   justify-content: center;
 }
 .pagination-btn {
-  border-radius: 50%;
-  padding: 1em;
-  transition: 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  transition: 0.8s;
+}
+
+.pagination-btn:disabled {
+  background-color: rgb(243, 241, 241);
+  color: #706b6b;
+  border: 1px solid #706b6b;
+}
+
+.pagination-btn:disabled:hover {
+  background-color: rgb(243, 241, 241);
+  color: #706b6b;
 }
 
 .pagination-btn:hover {

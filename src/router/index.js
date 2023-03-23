@@ -14,7 +14,7 @@ const router = createRouter({
       name: "name",
       component: RepositoryListVue,
     },
-    { path: "/notfound", name: "not found", component: NotFoundVue },
+    { path: "/:pathMatch(.*)*", name: "notFound", component: NotFoundVue },
     {
       path: "/repodetails/:repoName",
       name: "details",

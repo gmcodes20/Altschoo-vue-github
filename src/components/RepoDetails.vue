@@ -8,6 +8,7 @@
     </div>
 
     <div v-else class="repo card">
+      <button @click="router.back()" class="btn btn-seconday">Go Back</button>
       <div class="details pb-2 flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,12 +71,11 @@
 
 //
 <script setup>
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import axios from "axios";
 import LoadingPage from "./LoadingPage.vue";
-const route = useRoute();
 
-console.log(route.params);
+const router = useRouter();
 </script>
 
 <script>
@@ -100,7 +100,6 @@ export default {
       this.repository = response.data;
 
       this.loading = false;
-      console.log(this.repository);
     } catch (error) {
       this.errorMessage = error;
     }

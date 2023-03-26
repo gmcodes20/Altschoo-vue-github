@@ -186,7 +186,6 @@ export default {
         .then((response) => {
           this.repos = response.data;
         });
-      console.log(this.repos);
     } catch (error) {
       this.repoErro = error;
       // console.log(error);
